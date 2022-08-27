@@ -1,69 +1,98 @@
 import React, { useReducer } from "react";
 import axios from "axios";
+
+
 export const generalContext = React.createContext();
 
 const INIT_STATE = {
-  contact:[],
-  oneContact: null,
+  todo: [
+    {
+      id: "",
+      status: "",
+      category: "",
+    },
+  ],
+  oneTodo: null,
 };
 
-function reduser(state = INIT_STATE, action) {
-    switch (action.type) {
-        case "GET_CONTACTS":
-          return {...state, contact: action.payload};
+function reducer(state = INIT_STATE, action) {
+  switch (action.type) {
+    case "GET_TODOS":
+      return { ...state, todo: action.payload };
 
-        case "GET_ONE_CONTACT":
-            return {...state, oneContact: action.payload};
+    case "GET_ONE_TODO":
+      return { ...state, oneTodo: action.payload };
 
-        default: return state
-    }
+      case "GET_FILTRED":
+        return {...state, todo: action.payload}
+
+    default:
+      return state;
+  }
 }
 
-const ContactContextProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reduser, INIT_STATE); //! не понятен
-    const API = "http://localhost:8002/contacts";
+const TodoContextProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(reducer, INIT_STATE); //! не понятен
+  const API = "http://localhost:8000/todos";
 
-  async function addContacts(newContact) {
-    await axios.post(API, newContact);
-  }
+  // const [todo, setTodo] = useState("")
 
-  async function getContacts () {
-   let res =  await axios(API);
-    dispatch ({
-        type: "GET_CONTACTS",
-        payload: res.data,
-    })
+  async function addTodos(newTodo) {
+    await axios.post(API, newTodo);
   }
 
-  async function deleteContact (id) {
-     await axios.delete(`${API}/${id}`)
-     getContacts()
+  async function getTodos() {
+    let res = await axios(API);
+    dispatch({
+      type: "GET_TODOS",
+      payload: res.data,
+    });
+    // console.log(res.data);
+  }
+  async function getTodoFiltred(category) {
+    let res = await axios(API);
+    dispatch({
+      type: "GET_FILTRED",
+      payload: res.data.filter((item) => item.category === category),
+    });
+    // console.log(res.data[0]);
   }
 
-  async function editContact (id) {
-   let res =  await axios(`${API}/${id}`)
-    dispatch ({
-        type: "GET_ONE_CONTACT",
-        payload: res.data,
-    })
-    
+  async function deleteTodo(id) {
+    await axios.delete(`${API}/${id}`);
+    getTodos();
   }
-  async function updateContact(id, editedContact) {
-    await axios.patch(`${API}/${id}`, editedContact);
-   getContacts();
+
+  async function editTodo(id) {
+    let res = await axios(`${API}/${id}`);
+    dispatch({
+      type: "GET_ONE_TODO",
+      payload: res.data,
+    });
   }
+  async function updateTodo(id, editedTodo) {
+    await axios.patch(`${API}/${id}`, editedTodo);
+    getTodos();
+  }
+  
 
   return (
-    <generalContext.Provider value={{
-        contact: state.contact,
-        addContacts,
-        getContacts,
-        deleteContact,
-        editContact,
-        updateContact,
-        oneContact: state.oneContact
-    }}>{children}</generalContext.Provider>
+    <generalContext.Provider
+      value={{
+        todo: state.todo,
+        addTodos,
+        getTodos,
+        deleteTodo,
+        editTodo,
+        updateTodo,
+        oneTodo: state.oneTodo,
+        getTodoFiltred
+        // chooseCategory
+      }}
+    >
+      {children}
+    </generalContext.Provider>
   );
 };
 
-export default ContactContextProvider;
+export default TodoContextProvider;

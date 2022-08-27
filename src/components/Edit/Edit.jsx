@@ -5,29 +5,29 @@ import { Button, Container } from 'react-bootstrap';
 
 const Edit = () => {
 
-    const {editContact, oneContact, updateContact} = useContext(generalContext);
-    const [contact, setContact] = useState("")
+    const {editTodo, oneTodo, updateTodo} = useContext(generalContext);
+    const [todo, setTodo] = useState("")
     const { id } = useParams();
     const navigate = useNavigate();
-console.log(oneContact)
+console.log(oneTodo)
     useEffect(() => { 
-        editContact(id);
+        editTodo(id);
       }, []);
 
     useEffect(() => {
-        if (oneContact) {
-          setContact(oneContact.contact);
+        if (oneTodo) {
+          setTodo(oneTodo.todo);
         }
-      }, [oneContact]);
+      }, [oneTodo]);
       // console.log(addNewContact);
 
       function handleSave() {
 
-        let editedContact = {
+        let editedTodo = {
 
-          contact,
+          todo,
         };
-        updateContact (id, editedContact);
+        updateTodo (id, editedTodo);
         navigate("/list");
         // console.log(editedContact);
       }
@@ -35,11 +35,11 @@ console.log(oneContact)
 
     return (
         <Container>
-      {oneContact ? (
+      {oneTodo ? (
         <div>
           <input
-            value={contact}
-            onChange={event => setContact(event.target.value)}
+            value={todo}
+            onChange={event => setTodo(event.target.value)}
             label="Outlined"
             variant="outlined"
           />

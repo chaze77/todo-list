@@ -1,16 +1,34 @@
 {
-  "contacts": [
+  "todos": [
     {
-      "contact": "Dva",
-      "id": 2
+      "id": "dl4n1bq",
+      "todo": "333333fdfdf",
+      "status": true,
+      "category": "friday"
     },
     {
-      "contact": "vvv666",
-      "id": 3
+      "id": "wfboo7a",
+      "todo": "99999",
+      "status": true,
+      "category": "wednesday"
     },
     {
-      "contact": "fefefefef4455",
-      "id": 4
+      "id": "rtf46cv",
+      "todo": "kjkjkjk",
+      "status": true,
+      "category": "wednesday"
+    },
+    {
+      "id": "w19omc0",
+      "todo": "ggfgrgrgr",
+      "status": true,
+      "category": "tuesday"
+    },
+    {
+      "id": "qvydj8g",
+      "todo": "вцвцвцв",
+      "status": true,
+      "category": "thursday"
     }
   ]
 }

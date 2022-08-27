@@ -24,7 +24,10 @@ function reducer(state = INIT_STATE, action) {
       return { ...state, oneTodo: action.payload };
 
       case "GET_FILTRED":
-        return {...state, todo: action.payload}
+        return {...state, todo: action.payload};
+
+        case "CHANGE_STATUS":
+        return {...state, todo: action.payload};
 
     default:
       return state;
@@ -57,6 +60,7 @@ const TodoContextProvider = ({ children }) => {
     });
     // console.log(res.data[0]);
   }
+ 
 
   async function deleteTodo(id) {
     await axios.delete(`${API}/${id}`);
@@ -75,6 +79,23 @@ const TodoContextProvider = ({ children }) => {
     getTodos();
   }
   
+  async function changeStatus(id) {
+    let res = await axios(API);
+    dispatch({
+      type: "CHANGE_STATUS",
+      payload: res.data.filter((item, ) => {
+        if (item.id == id)  {
+          item.status = !item.status;
+        }
+        
+        console.log(item);
+        return item
+        
+    })
+  });
+
+}   
+   
 
   return (
     <generalContext.Provider
@@ -86,8 +107,10 @@ const TodoContextProvider = ({ children }) => {
         editTodo,
         updateTodo,
         oneTodo: state.oneTodo,
-        getTodoFiltred
-        // chooseCategory
+        getTodoFiltred,
+        changeStatus
+        // saveTodo
+       
       }}
     >
       {children}

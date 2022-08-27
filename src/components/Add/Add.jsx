@@ -4,6 +4,7 @@ import { InputGroup } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { generalContext } from "../../Context/Context";
 import { useNavigate } from "react-router-dom";
+import { List } from "@mui/material";
 
 const Add = () => {
   const { addTodos } = useContext(generalContext);
@@ -60,6 +61,7 @@ const Add = () => {
           Save
         </Button>
       </InputGroup>
+      <List setTodo={setTodo}/>
     </div>
   );
 };

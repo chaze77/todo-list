@@ -1,7 +1,6 @@
 import React, { useReducer } from "react";
 import axios from "axios";
 
-
 export const generalContext = React.createContext();
 
 const INIT_STATE = {
@@ -23,11 +22,11 @@ function reducer(state = INIT_STATE, action) {
     case "GET_ONE_TODO":
       return { ...state, oneTodo: action.payload };
 
-      case "GET_FILTRED":
-        return {...state, todo: action.payload};
+    case "GET_FILTRED":
+      return { ...state, todo: action.payload };
 
-        case "CHANGE_STATUS":
-        return {...state, todo: action.payload};
+    // case "CHANGE_STATUS":
+    //   return { ...state, todo: action.payload };
 
     default:
       return state;
@@ -50,7 +49,7 @@ const TodoContextProvider = ({ children }) => {
       type: "GET_TODOS",
       payload: res.data,
     });
-    // console.log(res.data);
+    console.log(res.data);
   }
   async function getTodoFiltred(category) {
     let res = await axios(API);
@@ -58,9 +57,7 @@ const TodoContextProvider = ({ children }) => {
       type: "GET_FILTRED",
       payload: res.data.filter((item) => item.category === category),
     });
-    // console.log(res.data[0]);
   }
- 
 
   async function deleteTodo(id) {
     await axios.delete(`${API}/${id}`);
@@ -78,24 +75,12 @@ const TodoContextProvider = ({ children }) => {
     await axios.patch(`${API}/${id}`, editedTodo);
     getTodos();
   }
-  
-  async function changeStatus(id) {
-    let res = await axios(API);
-    dispatch({
-      type: "CHANGE_STATUS",
-      payload: res.data.filter((item, ) => {
-        if (item.id == id)  {
-          item.status = !item.status;
-        }
-        
-        console.log(item);
-        return item
-        
-    })
-  });
 
-}   
-   
+  async function changeStatus(id) {
+    let { data } = await axios.patch(`${API}/${id}`);
+    await axios.patch(`${API}/${id}`, { status: !data.status });
+    getTodos();
+  }
 
   return (
     <generalContext.Provider
@@ -108,9 +93,8 @@ const TodoContextProvider = ({ children }) => {
         updateTodo,
         oneTodo: state.oneTodo,
         getTodoFiltred,
-        changeStatus
+        changeStatus,
         // saveTodo
-       
       }}
     >
       {children}

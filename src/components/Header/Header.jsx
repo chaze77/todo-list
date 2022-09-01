@@ -1,21 +1,21 @@
 import React from "react";
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { AppBar, Stack, Button, Link, Toolbar, Typography, Container } from "@mui/material"
+
 
 function Header() {
   return (
     <>
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">Contact list</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/list">List</Nav.Link>
-            <Nav.Link href="/add">Add</Nav.Link>
-            
-          </Nav>
-        </Container>
-      </Navbar>
+    <Container>
+      <AppBar position="static" variant="inherit">
+        <Toolbar>
+          <Typography variant="h6" href="#home">Smart TodoList</Typography>
+          <Stack direction="row" spacing={2}>            
+            <Button color="primary" variant="inherit" href="/list">List</Button>
+            <Button  color="primary" variant="inherit" href="/add">Add</Button>
+            </Stack>         
+          </Toolbar>
+      </AppBar>
+      </Container>
       <br />
      
     </>

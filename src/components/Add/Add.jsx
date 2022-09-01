@@ -4,11 +4,11 @@ import { InputGroup } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import { generalContext } from "../../Context/Context";
 import { useNavigate } from "react-router-dom";
-import { List } from "@mui/material";
+import { Container} from "@mui/material";
 
 const Add = () => {
   const { addTodos } = useContext(generalContext);
-  // console.log(addContacts);
+ 
   const [todo, setTodo] = useState("");
   const [days, setDays] = useState("");
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Add = () => {
       let newItem = {
         id: Math.random().toString(36).substring(2, 9),
         todo: todo,
-        status: true,
+        status: false,
         category: days,
       };
       addTodos(newItem);
@@ -30,6 +30,7 @@ const Add = () => {
 
   return (
     <div>
+      <Container>
       <div>
         <select
           onChange={(e) => {
@@ -44,12 +45,13 @@ const Add = () => {
           <option value="friday">friday</option>
         </select>
       </div>
-      ;
+      <br />
+     
       <InputGroup className="mb-3" style={{ width: "300px" }}>
         <Form.Control
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
-          placeholder="name"
+          placeholder="todo"
           aria-label="name"
           aria-describedby="basic-addon2"
         />
@@ -61,7 +63,8 @@ const Add = () => {
           Save
         </Button>
       </InputGroup>
-      <List setTodo={setTodo}/>
+      </Container>
+     
     </div>
   );
 };

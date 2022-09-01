@@ -9,10 +9,11 @@ const Edit = () => {
     const [todo, setTodo] = useState("")
     const { id } = useParams();
     const navigate = useNavigate();
-console.log(oneTodo)
+// console.log(oneTodo)
     useEffect(() => { 
         editTodo(id);
       }, []);
+      
 
     useEffect(() => {
         if (oneTodo) {

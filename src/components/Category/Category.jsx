@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { generalContext } from "../../Context/Context";
+import { Container} from "@mui/material"
 import "./Category.scss";
 
 const Category = () => {
   const { getTodoFiltred } = useContext(generalContext);
   const categoriesDay = [
-    { key: "all", name: "all" },
+   
     { key: "monday", name: "monday" },
     { key: "tuesday", name: "tuesday" },
     { key: "wednesday", name: "wednesday" },
@@ -15,6 +16,7 @@ const Category = () => {
   //   console.log(categoriesDay);
 
   return (
+    <Container>
     <div className="category">
       {categoriesDay.map((el) => (
         <div
@@ -23,9 +25,11 @@ const Category = () => {
           onClick={() => getTodoFiltred(el.name)}
         >
           {el.name}
+          
         </div>
       ))}
     </div>
+    </Container>
   );
 };
 
